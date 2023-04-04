@@ -1,6 +1,3 @@
-import { Operation } from "../operation/operation.entity";
-import { User } from "../user/user.entity";
-
 export default class RecordDTO {
   userId: string;
   operationId: string;

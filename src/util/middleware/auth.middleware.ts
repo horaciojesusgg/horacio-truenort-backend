@@ -1,6 +1,6 @@
-import { Response } from "express";
-import AuthRequest from "./authRequest.interface"
-import config from "../../config";
+import { Response } from 'express';
+import AuthRequest from './authRequest.interface';
+import config from '../../config';
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = () => {
@@ -25,6 +25,6 @@ const authMiddleware = () => {
 
     return descriptor;
   };
-}
+};
 
 export default authMiddleware;

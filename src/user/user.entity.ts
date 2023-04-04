@@ -23,6 +23,6 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Record, record => record.user)
+  @OneToMany(() => Record, (record) => record.user)
   records: Record[];
 }

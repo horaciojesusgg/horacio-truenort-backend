@@ -1,8 +1,8 @@
 export enum OperationsEnum {
-    ADD = 'ADD',
-    SUBSTRACT = 'Substract',
-    DIVIDE = 'Divide',
-    MULTIPLY = 'Multiply',
-    SQUARE_ROOT = 'SquareRoot',
-    RANDOM_STRING = 'RandomString'
+  ADD = 'ADD',
+  SUBSTRACT = 'SUBSTRACT',
+  DIVIDE = 'DIVIDE',
+  MULTIPLY = 'MULTIPLY',
+  SQUARE_ROOT = 'SQUARE_ROOT',
+  RANDOM_STRING = 'RANDOM_STRING',
 }

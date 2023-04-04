@@ -1,6 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { Record } from '../record/record.entity'
+import { Record } from '../record/record.entity';
 import { User } from '../user/user.entity';
 @Entity()
 export class Operation {

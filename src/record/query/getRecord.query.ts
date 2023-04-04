@@ -1,3 +1,1 @@
-export default class getRecordQuery {
-    
-}
+export default class getRecordQuery {}
