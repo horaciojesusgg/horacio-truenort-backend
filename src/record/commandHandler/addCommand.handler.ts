@@ -9,6 +9,6 @@ export default class AddCommandHandler {
     public handle(command: AddCommand) {
         command.validate();
         const sum = command.values.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
+        
     }
 }
