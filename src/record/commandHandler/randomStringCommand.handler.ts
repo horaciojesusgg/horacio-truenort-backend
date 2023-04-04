@@ -1,5 +1,5 @@
 import { autoInjectable } from "tsyringe";
-import RecordRepository from "../../repository/record.repository";
+import RecordRepository from "../record.repository";
 import DivideCommand from "../command/divide.command";
 import RandomStringCommand from "../command/randomString.command";
 
@@ -9,6 +9,7 @@ export default class RandomStringCommandHandler {
 
     public async handle(command: RandomStringCommand) {
         const response = await fetch('https://www.random.org/strings/?num=1&len=10&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new');
+        
         console.log(response);
     }
 }

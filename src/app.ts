@@ -1,33 +1,43 @@
 
 import express, { Application as ExApplication, Handler } from 'express';
 import cors from 'cors';
-import { controllers } from './controllers';
+import { controllers } from './controllers.index';
 import { IRouter } from './util/decorator/handlers.decorator';
-
 import { container } from 'tsyringe';
 import Redis, { Redis as RedisClient } from "ioredis";
 import multer from 'multer';
 import bodyParser from 'body-parser';
-import { Controller, createExpressServer, useExpressServer } from 'routing-controllers';
-import path from 'path';
-import { DataSource } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { PostgresDataSource } from './datasources/postgresDatasource';
-import RoutesInfo from './constants/routesInfo.type';
+import RoutesInfo from './util/constants/routesInfo.type';
 import { MetadataKeys } from './util/decorator/metadata.keys';
+import { Operation } from './operation/operation.entity';
+import { Record } from './record/record.entity';
+import { User } from './user/user.entity';
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+container.register<Repository<Operation>>('OperationRepository', {
+    useValue: PostgresDataSource.getRepository(Operation)
+  });
+
+  container.register<Repository<Record>>('RecordRepository', {
+    useValue: PostgresDataSource.getRepository(Record)
+  });
+
+  container.register<Repository<User>>('UserRepository', {
+    useValue: PostgresDataSource.getRepository(User)
+  });
 
 export default class Server {
     private app: ExApplication;
     constructor() {
+        
         this.app = express();
 
         this.registerContainers();
-
         this.middlewares();
         this.registerRouters();
-
     }
 
     private createRedisClient() {

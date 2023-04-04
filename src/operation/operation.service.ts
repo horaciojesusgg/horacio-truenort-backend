@@ -1,6 +1,5 @@
-import { OperationsEnum } from '../constants/operations.enum'
+import { OperationsEnum } from '../util/constants/operations.enum'
 import ICommand from '../util/command.interface'
-import {commands} from '../record/command'
 
 export default class OperationService {
     constructor() {

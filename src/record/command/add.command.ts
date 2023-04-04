@@ -1,5 +1,3 @@
-import { autoInjectable, injectable } from "tsyringe";
-import OperationRepository from "../../repository/operation.repository";
 import ICommand from "../../util/command.interface";
 
 export default class AddCommand implements ICommand {

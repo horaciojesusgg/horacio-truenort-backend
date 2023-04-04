@@ -4,8 +4,9 @@ import Controller from "../util/decorator/controller.decorator";
 import { Get, Post } from "../util/decorator/handlers.decorator";
 import AuthRequest from "../util/middleware/authRequest.interface";
 import { Response } from 'express';
-import AddCommandHandler from '../record/commandHandler/addCommand.handler';
-import AddCommand from '../record/command/add.command';
+import AddCommandHandler from './commandHandler/addCommand.handler';
+import AddCommand from './command/add.command';
+import authMiddleware from '../util/middleware/auth.middleware';
 
 
 @Controller('/record')
@@ -19,6 +20,7 @@ export default class RecordController {
     }
 
     @Get('/list')
+    // @authMiddleware()
     async list( request: Request, response: Response) {
         console.log(await this.redis.get('myvalue'));
         

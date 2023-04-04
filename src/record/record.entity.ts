@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { Operation } from './Operation';
-import { User } from './User';
+import { Operation } from '../operation/operation.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Record {

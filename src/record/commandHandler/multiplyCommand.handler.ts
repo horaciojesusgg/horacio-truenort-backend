@@ -1,11 +1,12 @@
 import { autoInjectable } from "tsyringe";
-import RecordRepository from "../../repository/record.repository";
+import RecordRepository from "../record.repository";
 import AddCommand from "../command/add.command";
 import MultiplyCommand from "../command/multiply.command";
+import OperationRepository from "../../operation/operation.repository";
 
 @autoInjectable()
 export default class MultiplyCommandHandler {
-    constructor(private readonly recordRepository: RecordRepository) {}
+    constructor(private readonly recordRepository: RecordRepository, private readonly operationRepository: OperationRepository) {}
 
     public handle(command: MultiplyCommand) {
         command.validate();

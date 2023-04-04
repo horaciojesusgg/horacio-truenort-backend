@@ -9,6 +9,6 @@ export const PostgresDataSource = new DataSource({
     password: config.dbPassword,
     database:  config.dbDatabase,
     port: 5432,
-    migrations: ['src/migrations/**/*{.js,.ts}'],
+    migrations: ['src/datasources/migrations/**/*{.js,.ts}'],
     entities: ["src/**/*.entity{.js,.ts}"],
 })

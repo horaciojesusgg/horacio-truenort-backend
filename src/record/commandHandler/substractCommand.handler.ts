@@ -1,5 +1,5 @@
 import { autoInjectable } from "tsyringe";
-import RecordRepository from "../../repository/record.repository";
+import RecordRepository from "../record.repository";
 import DivideCommand from "../command/divide.command";
 import SubstractCommand from "../command/substract.command";
 

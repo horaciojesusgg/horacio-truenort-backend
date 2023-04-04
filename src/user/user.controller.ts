@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { autoInjectable } from 'tsyringe';
-import UserRepository from '../repository/user.repository';
+import UserRepository from './user.repository';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import config from '../config';

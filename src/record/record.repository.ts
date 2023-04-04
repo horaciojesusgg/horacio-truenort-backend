@@ -1,0 +1,33 @@
+import { autoInjectable, container, inject } from "tsyringe";
+import { DataSource, Repository } from "typeorm";
+import { Record } from "./record.entity";
+import ContactDto from "../operation/operation.dto";
+import { User } from "../user/user.entity";
+import RecordDTO from "./record.dto";
+
+@autoInjectable()
+export default class RecordRepository {
+
+    constructor(@inject('RecordRepository') private readonly repository: Repository<Record>) {
+    }
+
+    async getAll(user: User): Promise<Record[]> {
+        return await this.repository.findBy({userId: user.id});
+    }
+
+    async create(record: RecordDTO): Promise<void> {
+       await this.repository.save({
+            ...record,
+        })
+    }
+
+    async findLatest(): Promise<Record|null> {
+        return await this.repository.findOne({
+            order: {
+              createdAt: 'DESC',
+            },
+          });
+    }
+
+
+}
