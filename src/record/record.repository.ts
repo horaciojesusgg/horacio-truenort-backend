@@ -15,8 +15,8 @@ export default class RecordRepository {
         return await this.repository.findBy({userId: user.id});
     }
 
-    async create(record: RecordDTO): Promise<void> {
-       await this.repository.save({
+    async create(record: RecordDTO): Promise<Record> {
+       return await this.repository.save({
             ...record,
         })
     }

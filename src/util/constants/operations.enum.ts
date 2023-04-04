@@ -1,5 +1,5 @@
 export enum OperationsEnum {
-    ADD = 'Add',
+    ADD = 'ADD',
     SUBSTRACT = 'Substract',
     DIVIDE = 'Divide',
     MULTIPLY = 'Multiply',

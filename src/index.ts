@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import Server from "./app"
-import { PostgresDataSource } from './datasources/postgresDatasource';
+import { PostgresDataSource } from './data/sources/postgresDatasource';
 
 const main = async () => {
     try {

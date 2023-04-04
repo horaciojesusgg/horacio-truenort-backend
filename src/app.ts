@@ -8,7 +8,7 @@ import Redis, { Redis as RedisClient } from "ioredis";
 import multer from 'multer';
 import bodyParser from 'body-parser';
 import { DataSource, Repository } from 'typeorm';
-import { PostgresDataSource } from './datasources/postgresDatasource';
+import { PostgresDataSource } from './data/sources/postgresDatasource';
 import RoutesInfo from './util/constants/routesInfo.type';
 import { MetadataKeys } from './util/decorator/metadata.keys';
 import { Operation } from './operation/operation.entity';
@@ -16,18 +16,6 @@ import { Record } from './record/record.entity';
 import { User } from './user/user.entity';
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-
-container.register<Repository<Operation>>('OperationRepository', {
-    useValue: PostgresDataSource.getRepository(Operation)
-  });
-
-  container.register<Repository<Record>>('RecordRepository', {
-    useValue: PostgresDataSource.getRepository(Record)
-  });
-
-  container.register<Repository<User>>('UserRepository', {
-    useValue: PostgresDataSource.getRepository(User)
-  });
 
 export default class Server {
     private app: ExApplication;
@@ -57,6 +45,17 @@ export default class Server {
 
     private registerContainers() {
         container.register<DataSource>('PgDataSource', {useValue: PostgresDataSource})
+        container.register<Repository<Operation>>('OperationRepository', {
+            useValue: PostgresDataSource.getRepository(Operation)
+          });
+        
+          container.register<Repository<Record>>('RecordRepository', {
+            useValue: PostgresDataSource.getRepository(Record)
+          });
+        
+          container.register<Repository<User>>('UserRepository', {
+            useValue: PostgresDataSource.getRepository(User)
+          });
         container.register<RedisClient>("RedisClient", {
             useFactory: this.createRedisClient,
         });
@@ -64,7 +63,6 @@ export default class Server {
 
     private registerRouters() {
         const info: RoutesInfo[] = [];
-        console.log(controllers)
         controllers.forEach((controllerClass) => {
             const controllerInstance: { [handleName: string]: Handler } = container.resolve(controllerClass as any);
             const basePath: string = Reflect.getMetadata(MetadataKeys.BASE_PATH, controllerClass);
