@@ -23,6 +23,9 @@ const config = {
       accessKeyId: 'AKIAWK6WSBRSWK3YUZ6S',
     },
   },
+  randomOrg: {
+    apiKey: process.env.RANDOMORG_API_KEY || '',
+  },
 };
 
 export default config;

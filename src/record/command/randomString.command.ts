@@ -1,22 +1,24 @@
 import ICommand from '../../util/command.interface';
 import { Operation } from '../../operation/operation.entity';
 import config from '../../config';
+import RandomOrg from 'random-org';
 
-interface RandomStringCommandPayload {
+export interface RandomStringCommandPayload {
   amount: number;
   length: number;
-  unique: boolean;
 }
 
-export default class RandomStringCommand implements ICommand {
-  constructor(payload: RandomStringCommandPayload, public operation: Operation) {}
+export class RandomStringCommand implements ICommand {
+  constructor(public payload: RandomStringCommandPayload, public operation: Operation) {}
 
-  async execute(): Promise<string> {
-    const response = await fetch(
-      'https://www.random.org/strings/?num=1&len=10&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new',
-    );
-    console.log(await response.json());
-    return 'TEST';
+  async execute(): Promise<string[]> {
+    const random = new RandomOrg({ apiKey: config.randomOrg.apiKey });
+    const result = await random.generateStrings({
+      n: this.payload.amount,
+      length: this.payload.length,
+      characters: 'abcdefghijklmnopqrstuvwxyz',
+    });
+    return result.random.data;
   }
 
   validate(): void {

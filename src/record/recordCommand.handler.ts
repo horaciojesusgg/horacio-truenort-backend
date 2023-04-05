@@ -9,7 +9,7 @@ export default class RecordCommandHandler {
   constructor(private readonly recordRepository: RecordRepository) {}
 
   public async handle(command: ICommand, user: User) {
-    const operationResult = command.execute();
+    const operationResult = await command.execute();
     const calculatedUserBalance = await this.calculateUserBalance(command.operation, user.id);
     const record = await this.recordRepository.create({
       userId: user.id,
@@ -18,6 +18,8 @@ export default class RecordCommandHandler {
       operation_response: operationResult.toString(),
       amount: 1,
     });
+
+    return operationResult;
   }
 
   private async calculateUserBalance(operation: Operation, userId: string): Promise<number> {
