@@ -1,5 +1,4 @@
 import { autoInjectable } from 'tsyringe';
-import RedisService from '../data/redis.service';
 import { Operation } from '../operation/operation.entity';
 import { User } from '../user/user.entity';
 import ICommand from '../util/command.interface';
@@ -7,7 +6,7 @@ import RecordRepository from './record.repository';
 
 @autoInjectable()
 export default class RecordCommandHandler {
-  constructor(private readonly redisService: RedisService, private readonly recordRepository: RecordRepository) {}
+  constructor(private readonly recordRepository: RecordRepository) {}
 
   public async handle(command: ICommand, user: User) {
     const operationResult = command.execute();
@@ -19,7 +18,6 @@ export default class RecordCommandHandler {
       operation_response: operationResult.toString(),
       amount: 1,
     });
-    // await this.redisService.setRecord(record, user.id);
   }
 
   private async calculateUserBalance(operation: Operation, userId: string): Promise<number> {

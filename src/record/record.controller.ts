@@ -13,7 +13,6 @@ import MultiplyCommand from './command/multiply.command';
 import DivideCommand from './command/divide.command';
 import SquareRootCommand from './command/squareRoot.command';
 import RandomStringCommand from './command/randomString.command';
-import RedisService from '../data/redis.service';
 
 @Controller('/record')
 @autoInjectable()
@@ -21,14 +20,12 @@ export default class RecordController {
   constructor(
     private readonly operationService: OperationService,
     private readonly commandHandler: RecordCommandHandler,
-    private readonly redisService: RedisService,
   ) {}
 
   @Get('/list')
   @authMiddleware()
   async list(request: AuthRequest, response: Response) {
     const key = `records:${request.user.id}`;
-    const a = await this.redisService.getRecord(key);
     return response.send('test');
   }
 

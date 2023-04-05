@@ -3,7 +3,6 @@ import cors from 'cors';
 import { controllers } from './controllers.index';
 import { IRouter } from './util/decorator/handlers.decorator';
 import { container } from 'tsyringe';
-import Redis, { Redis as RedisClient } from 'ioredis';
 import multer from 'multer';
 import bodyParser from 'body-parser';
 import { DataSource, Repository } from 'typeorm';
@@ -26,13 +25,6 @@ export default class Server {
     this.registerRouters();
   }
 
-  private createRedisClient() {
-    return new Redis({
-      host: 'localhost',
-      port: 6379,
-    });
-  }
-
   private middlewares() {
     this.app.use(bodyParser.json());
     this.app.use(upload.single('file'));
@@ -52,9 +44,6 @@ export default class Server {
 
     container.register<Repository<User>>('UserRepository', {
       useValue: PostgresDataSource.getRepository(User),
-    });
-    container.register<RedisClient>('RedisClient', {
-      useFactory: this.createRedisClient,
     });
   }
 
