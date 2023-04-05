@@ -2,7 +2,7 @@ import { autoInjectable, inject } from 'tsyringe';
 import { Repository } from 'typeorm';
 import { RegisterUserDto } from './user.dto';
 import { User } from './user.entity';
-import { UserStatusEnum } from '../util/constants/userStatus.enum';
+import { UserStatusEnum } from './constants/userStatus.enum';
 
 @autoInjectable()
 export default class UserRepository {

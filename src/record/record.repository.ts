@@ -1,5 +1,5 @@
 import { autoInjectable, container, inject } from 'tsyringe';
-import {  Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Record } from './record.entity';
 import { User } from '../user/user.entity';
 import RecordDTO from './record.dto';
@@ -18,11 +18,11 @@ export default class RecordRepository {
     });
   }
 
-  async findLatest(): Promise<Record | null> {
-    return await this.repository.findOne({
-      order: {
-        createdAt: 'DESC',
-      },
-    });
+  async findLatest(userId: string): Promise<Record | null> {
+    return await this.repository
+      .createQueryBuilder('record')
+      .where('record.userId = :userId', { userId })
+      .orderBy('record.createdAt', 'DESC')
+      .getOne();
   }
 }

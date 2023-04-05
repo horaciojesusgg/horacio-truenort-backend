@@ -6,13 +6,14 @@ import { Response } from 'express';
 import AddCommand from './command/add.command';
 import authMiddleware from '../util/middleware/auth.middleware';
 import OperationService from '../operation/operation.service';
-import { OperationsEnum } from '../util/constants/operations.enum';
+import { OperationsEnum } from '../operation/constants/operations.enum';
 import RecordCommandHandler from './recordCommand.handler';
 import SubstractCommand from './command/substract.command';
 import MultiplyCommand from './command/multiply.command';
 import DivideCommand from './command/divide.command';
 import SquareRootCommand from './command/squareRoot.command';
 import RandomStringCommand from './command/randomString.command';
+import RedisService from '../data/redis.service';
 
 @Controller('/record')
 @autoInjectable()
@@ -20,11 +21,14 @@ export default class RecordController {
   constructor(
     private readonly operationService: OperationService,
     private readonly commandHandler: RecordCommandHandler,
+    private readonly redisService: RedisService,
   ) {}
 
   @Get('/list')
   @authMiddleware()
-  async list(request: Request, response: Response) {
+  async list(request: AuthRequest, response: Response) {
+    const key = `records:${request.user.id}`;
+    const a = await this.redisService.getRecord(key);
     return response.send('test');
   }
 
@@ -37,7 +41,11 @@ export default class RecordController {
       return res.send('Sorry! This operation is not implemented yet.');
     }
     const addCommand = new AddCommand(payload, operation);
-    await this.commandHandler.handle(addCommand);
+    try {
+      await this.commandHandler.handle(addCommand, req.user);
+    } catch (error: any) {
+      return res.status(200).send(error.message);
+    }
     return res.send('Hello response!');
   }
 
@@ -49,8 +57,13 @@ export default class RecordController {
     if (!operation) {
       return res.send('Sorry! This operation is not implemented yet.');
     }
-    const addCommand = new SubstractCommand(payload, operation);
-    await this.commandHandler.handle(addCommand);
+    const substractCommand = new SubstractCommand(payload, operation);
+    try {
+      await this.commandHandler.handle(substractCommand, req.user);
+    } catch (error: any) {
+      return res.status(200).send(error.message);
+    }
+
     return res.send('Hello response!');
   }
 
@@ -62,8 +75,12 @@ export default class RecordController {
     if (!operation) {
       return res.send('Sorry! This operation is not implemented yet.');
     }
-    const addCommand = new DivideCommand(dividend, divisor, operation);
-    await this.commandHandler.handle(addCommand);
+    const divideommand = new DivideCommand(dividend, divisor, operation);
+    try {
+      await this.commandHandler.handle(divideommand, req.user);
+    } catch (error: any) {
+      return res.status(200).send(error.message);
+    }
     return res.send('Hello response!');
   }
 
@@ -75,8 +92,13 @@ export default class RecordController {
     if (!operation) {
       return res.send('Sorry! This operation is not implemented yet.');
     }
-    const addCommand = new MultiplyCommand(payload, operation);
-    await this.commandHandler.handle(addCommand);
+    const multiplyCommand = new MultiplyCommand(payload, operation);
+
+    try {
+      await this.commandHandler.handle(multiplyCommand, req.user);
+    } catch (error: any) {
+      return res.status(200).send(error.message);
+    }
     return res.send('Hello response!');
   }
 
@@ -88,8 +110,12 @@ export default class RecordController {
     if (!operation) {
       return res.send('Sorry! This operation is not implemented yet.');
     }
-    const addCommand = new SquareRootCommand(payload, operation);
-    await this.commandHandler.handle(addCommand);
+    const sqrtCommand = new SquareRootCommand(payload, operation);
+    try {
+      await this.commandHandler.handle(sqrtCommand, req.user);
+    } catch (error: any) {
+      return res.status(200).send(error.message);
+    }
     return res.send('Hello response!');
   }
 
@@ -101,8 +127,12 @@ export default class RecordController {
     if (!operation) {
       return res.send('Sorry! This operation is not implemented yet.');
     }
-    const addCommand = new RandomStringCommand({ amount, length, unique }, operation);
-    await this.commandHandler.handle(addCommand);
+    const randomStringCommand = new RandomStringCommand({ amount, length, unique }, operation);
+    try {
+      await this.commandHandler.handle(randomStringCommand, req.user);
+    } catch (error: any) {
+      return res.status(200).send(error.message);
+    }
     return res.send('Hello response!');
   }
 }

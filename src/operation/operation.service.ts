@@ -1,4 +1,4 @@
-import { OperationsEnum } from '../util/constants/operations.enum';
+import { OperationsEnum } from './constants/operations.enum';
 import ICommand from '../util/command.interface';
 import OperationRepository from './operation.repository';
 import { autoInjectable } from 'tsyringe';

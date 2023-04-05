@@ -1,6 +1,6 @@
 import { Operation } from '../../operation/operation.entity';
 import ICommand from '../../util/command.interface';
-import { OperationsEnum } from '../../util/constants/operations.enum';
+import { OperationsEnum } from '../../operation/constants/operations.enum';
 
 export default class DivideCommand implements ICommand {
   constructor(public dividend: number, public divisor: number, public operation: Operation) {}

@@ -2,7 +2,7 @@ import { autoInjectable, inject } from 'tsyringe';
 import { Repository } from 'typeorm';
 import { Operation } from './operation.entity';
 import { User } from '../user/user.entity';
-import { OperationsEnum } from '../util/constants/operations.enum';
+import { OperationsEnum } from './constants/operations.enum';
 
 @autoInjectable()
 export default class OperationRepository {

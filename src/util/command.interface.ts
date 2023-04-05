@@ -5,3 +5,4 @@ export default interface ICommand {
   validate(): void;
   execute(): number | Promise<string> | Promise<string[]>;
 }
+
