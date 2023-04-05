@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const config = {
+  port: process.env.PORT || '8080',
   dbHost: process.env.DB_HOST || 'localhost',
   dbUsername: process.env.DB_USERNAME || 'postgres',
   dbPassword: process.env.DB_PASSWORD || 'example',

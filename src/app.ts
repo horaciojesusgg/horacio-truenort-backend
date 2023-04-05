@@ -12,6 +12,7 @@ import { MetadataKeys } from './util/decorator/metadata.keys';
 import { Operation } from './operation/operation.entity';
 import { Record } from './record/record.entity';
 import { User } from './user/user.entity';
+import config from './config';
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -67,8 +68,8 @@ export default class Server {
   }
 
   listen() {
-    this.app.listen(3000, () => {
-      console.log('App listening on port 3000');
+    this.app.listen(config.port, () => {
+      console.log('App listening on port ' + config.port);
     });
   }
 }
