@@ -9,7 +9,11 @@ export default class RecordRepository {
   constructor(@inject('RecordRepository') private readonly repository: Repository<Record>) {}
 
   async getAll(user: User): Promise<Record[]> {
-    return await this.repository.findBy({ userId: user.id });
+    return await this.repository
+      .createQueryBuilder('record')
+      .where('record.userId = :userId', { userId: user.id })
+      .orderBy('record.createdAt', 'DESC')
+      .getMany();
   }
 
   async create(record: RecordDTO): Promise<Record> {

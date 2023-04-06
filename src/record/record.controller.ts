@@ -6,18 +6,23 @@ import { Response } from 'express';
 import authMiddleware from '../util/middleware/auth.middleware';
 import OperationService from '../operation/operation.service';
 import RecordService from './record.service';
+import GetAllRecordsQuery from './query/getAllRecords.query';
 
 @Controller('/record')
 @autoInjectable()
 export default class RecordController {
-  constructor(private readonly operationService: OperationService, private readonly recordService: RecordService) {}
+  constructor(
+    private readonly operationService: OperationService,
+    private readonly recordService: RecordService,
+    private readonly getAllRecordsQuery: GetAllRecordsQuery,
+  ) {}
 
-  // @Get('/list')
-  // @authMiddleware()
-  // async list(request: AuthRequest, response: Response) {
-  //   const key = `records:${request.user.id}`;
-  //   return response.send('test');
-  // }
+  @Get('/list')
+  @authMiddleware()
+  async list(request: AuthRequest, response: Response) {
+    const result = await this.getAllRecordsQuery.execute(request.user);
+    return response.json({ result });
+  }
 
   @Post('/evaluate-arithmetic-expression')
   @authMiddleware()
@@ -47,7 +52,7 @@ export default class RecordController {
   @Post('/random-string')
   @authMiddleware()
   async randomString(req: AuthRequest, res: Response) {
-    const { amount, length, unique } = req.body;
+    const { amount, length } = req.body;
     try {
       const result = await this.recordService.generateRandomString({ amount, length }, req.user);
       return res.json({ result });

@@ -37,13 +37,13 @@ export default class RecordService {
     const substractOperation = await this.operationService.getByType(OperationsEnum.SUBSTRACT);
     const multiplyOperation = await this.operationService.getByType(OperationsEnum.MULTIPLY);
     const divideOperation = await this.operationService.getByType(OperationsEnum.DIVIDE);
-    // First, we split the expression into an array of individual terms
+    // Split the expression into an array of individual terms
     const terms: string[] = expression.split(/([+\-*/])/);
 
     // Then, we initialize a variable to keep track of the total value
     let total: number = 0;
 
-    // First, we perform all multiplication and division operations
+    // Perform all multiplication and division operations
     for (let i = 0; i < terms.length; i++) {
       const term = terms[i];
       if (term === '*' || term === '/') {
@@ -65,7 +65,7 @@ export default class RecordService {
       }
     }
 
-    // Then, we perform all addition and subtraction operations
+    // Perform all addition and subtraction operations
     for (let i = 0; i < terms.length; i++) {
       const term = terms[i];
       const isOperator: boolean = ['+', '-'].includes(term);
