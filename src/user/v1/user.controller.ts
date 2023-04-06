@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import { autoInjectable } from 'tsyringe';
-import UserRepository from './user.repository';
+import UserRepository from '../user.repository';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import config from '../config';
-import Controller from '../util/decorator/controller.decorator';
-import { Post } from '../util/decorator/handlers.decorator';
-@Controller('/user')
+import config from '../../config';
+import Controller from '../../util/decorator/controller.decorator';
+import { Post } from '../../util/decorator/handlers.decorator';
+
+@Controller('/v1/user')
 @autoInjectable()
 export default class UserController {
   constructor(private userRepository: UserRepository) {}

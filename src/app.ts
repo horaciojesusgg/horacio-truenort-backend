@@ -52,7 +52,7 @@ export default class Server {
     const info: RoutesInfo[] = [];
     controllers.forEach((controllerClass) => {
       const controllerInstance: { [handleName: string]: Handler } = container.resolve(controllerClass as any);
-      const basePath: string = Reflect.getMetadata(MetadataKeys.BASE_PATH, controllerClass);
+      const basePath: string = '/api' + Reflect.getMetadata(MetadataKeys.BASE_PATH, controllerClass);
       const routers: IRouter[] = Reflect.getMetadata(MetadataKeys.ROUTERS, controllerClass);
       const exRouter = express.Router();
       routers.forEach(({ method, path, handlerName }) => {

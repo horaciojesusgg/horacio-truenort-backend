@@ -1,13 +1,13 @@
 import { autoInjectable } from 'tsyringe';
-import Controller from '../util/decorator/controller.decorator';
-import { Get, Post } from '../util/decorator/handlers.decorator';
-import AuthRequest from '../util/middleware/authRequest.interface';
+import Controller from '../../util/decorator/controller.decorator';
+import { Get, Post } from '../../util/decorator/handlers.decorator';
+import AuthRequest from '../../util/middleware/authRequest.interface';
 import { Response } from 'express';
-import authMiddleware from '../util/middleware/auth.middleware';
-import RecordService from './record.service';
-import GetAllRecordsQuery from './query/getAllRecords.query';
+import authMiddleware from '../../util/middleware/auth.middleware';
+import RecordService from '../record.service';
+import GetAllRecordsQuery from '../query/getAllRecords.query';
 
-@Controller('/record')
+@Controller('/v1/record')
 @autoInjectable()
 export default class RecordController {
   constructor(
