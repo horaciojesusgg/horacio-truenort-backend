@@ -1,10 +1,9 @@
-import { autoInjectable, container, inject, injectable } from 'tsyringe';
+import { autoInjectable } from 'tsyringe';
 import Controller from '../util/decorator/controller.decorator';
 import { Get, Post } from '../util/decorator/handlers.decorator';
 import AuthRequest from '../util/middleware/authRequest.interface';
 import { Response } from 'express';
 import authMiddleware from '../util/middleware/auth.middleware';
-import OperationService from '../operation/operation.service';
 import RecordService from './record.service';
 import GetAllRecordsQuery from './query/getAllRecords.query';
 
@@ -12,7 +11,6 @@ import GetAllRecordsQuery from './query/getAllRecords.query';
 @autoInjectable()
 export default class RecordController {
   constructor(
-    private readonly operationService: OperationService,
     private readonly recordService: RecordService,
     private readonly getAllRecordsQuery: GetAllRecordsQuery,
   ) {}
@@ -20,7 +18,8 @@ export default class RecordController {
   @Get('/list')
   @authMiddleware()
   async list(request: AuthRequest, response: Response) {
-    const result = await this.getAllRecordsQuery.execute(request.user);
+    const { page = 1 , limit = 20 } = request.query as any;
+    const result = await this.getAllRecordsQuery.execute(request.user, {page, limit});
     return response.json({ result });
   }
 
@@ -28,8 +27,10 @@ export default class RecordController {
   @authMiddleware()
   async evaluate(req: AuthRequest, res: Response) {
     try {
-      const { expression } = req.body;
-      const result = await this.recordService.evaluateExpressionMDAS(expression, req.user);
+      const  expression  = req.body.expression as string;
+      console.log(expression);
+      const result = await this.recordService.evaluateExpressionMDAS(expression.trim(), req.user);
+      console.log(result)
       return res.json({ result });
     } catch (error: any) {
       return res.send(error.message);

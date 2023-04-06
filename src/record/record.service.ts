@@ -18,6 +18,10 @@ export default class RecordService {
     private readonly recordRepository: RecordRepository,
   ) {}
 
+  public async deleteRecord(recordId: string, user: User) {
+    return this.recordRepository.delete(recordId, user.id);
+  }
+
   public async generateRandomString(params: RandomStringCommandPayload, user: User) {
     const squareRootOperation = await this.operationService.getByType(OperationsEnum.RANDOM_STRING);
     const squareRootCommand = new RandomStringCommand(params, squareRootOperation);

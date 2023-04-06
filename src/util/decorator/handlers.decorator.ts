@@ -2,6 +2,7 @@ import { MetadataKeys } from './metadata.keys';
 export enum Methods {
   GET = 'get',
   POST = 'post',
+  DELETE = 'delete'
 }
 export interface IRouter {
   method: Methods;
@@ -27,3 +28,4 @@ const methodDecoratorFactory = (method: Methods) => {
 
 export const Get = methodDecoratorFactory(Methods.GET);
 export const Post = methodDecoratorFactory(Methods.POST);
+export const Delete = methodDecoratorFactory(Methods.DELETE);
