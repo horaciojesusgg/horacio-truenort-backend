@@ -2,6 +2,15 @@
 
 A brief description of what this project does and who it's for
 
+## Architecture:
+
+Here are some details about the backend Architecture: 
+
+It is implementing several design patterns, such as CQRS and Repository. The live version of the backend is Hosted on an AWS Elastic Beanstalk serverless instance, and the database is hosted on an AWS RDS Instance. Also, there is a pipeline for CI/CD on AWS CodePipeline, that is attached to the main branch of this repo.
+
+The UI is hosted on Vercel.
+
+I'm using TypeORM as ORM and TSyringe for dependency injection.
 
 ## Backend Installation
 Step 1: Installation
