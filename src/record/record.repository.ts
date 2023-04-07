@@ -34,10 +34,10 @@ export default class RecordRepository {
   }
 
   async delete(recordId: string, userId: string) {
-    await this.repository.createQueryBuilder('record')
-    .softDelete()  
-    .where("record.id = :id", { id: recordId})
-    .andWhere("record.userId = :userId", {userId})
-    .execute();
+    await this.repository
+      .createQueryBuilder('record')
+      .softDelete()
+      .where('record.id = :id', { id: recordId })
+      .execute();
   }
 }

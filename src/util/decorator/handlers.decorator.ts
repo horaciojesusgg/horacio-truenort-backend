@@ -2,7 +2,7 @@ import { MetadataKeys } from './metadata.keys';
 export enum Methods {
   GET = 'get',
   POST = 'post',
-  DELETE = 'delete'
+  DELETE = 'delete',
 }
 export interface IRouter {
   method: Methods;

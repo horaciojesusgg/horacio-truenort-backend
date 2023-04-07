@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import config from '../../config';
 import { Operation } from '../../operation/operation.entity';
 import { Record } from '../../record/record.entity';
-import {User} from '../../user/user.entity'
+import { User } from '../../user/user.entity';
 
 export const PostgresDataSource = new DataSource({
   migrationsTableName: 'migrations',

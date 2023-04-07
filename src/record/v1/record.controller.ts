@@ -1,6 +1,6 @@
 import { autoInjectable } from 'tsyringe';
 import Controller from '../../util/decorator/controller.decorator';
-import { Get, Post } from '../../util/decorator/handlers.decorator';
+import { Delete, Get, Post } from '../../util/decorator/handlers.decorator';
 import AuthRequest from '../../util/middleware/authRequest.interface';
 import { Response } from 'express';
 import authMiddleware from '../../util/middleware/auth.middleware';
@@ -10,16 +10,13 @@ import GetAllRecordsQuery from '../query/getAllRecords.query';
 @Controller('/v1/record')
 @autoInjectable()
 export default class RecordController {
-  constructor(
-    private readonly recordService: RecordService,
-    private readonly getAllRecordsQuery: GetAllRecordsQuery,
-  ) {}
+  constructor(private readonly recordService: RecordService, private readonly getAllRecordsQuery: GetAllRecordsQuery) {}
 
   @Get('/list')
   @authMiddleware()
   async list(request: AuthRequest, response: Response) {
-    const { page = 1 , limit = 20 } = request.query as any;
-    const result = await this.getAllRecordsQuery.execute(request.user, {page, limit});
+    const { page = 1, limit = 50 } = request.query as any;
+    const result = await this.getAllRecordsQuery.execute(request.user, { page, limit });
     return response.json({ result });
   }
 
@@ -27,10 +24,10 @@ export default class RecordController {
   @authMiddleware()
   async evaluate(req: AuthRequest, res: Response) {
     try {
-      const  expression  = req.body.expression as string;
+      const expression = req.body.expression as string;
       console.log(expression);
       const result = await this.recordService.evaluateExpressionMDAS(expression.trim(), req.user);
-      console.log(result)
+      console.log(result);
       return res.json({ result });
     } catch (error: any) {
       return res.send(error.message);
@@ -56,6 +53,18 @@ export default class RecordController {
     const { amount, length } = req.body;
     try {
       const result = await this.recordService.generateRandomString({ amount, length }, req.user);
+      return res.json({ result });
+    } catch (error: any) {
+      return res.status(200).send(error.message);
+    }
+  }
+
+  @Delete('/')
+  @authMiddleware()
+  async deleteRecord(req: AuthRequest, res: Response) {
+    try {
+      const { recordId } = req.body;
+      const result = await this.recordService.deleteRecord(recordId, req.user);
       return res.json({ result });
     } catch (error: any) {
       return res.status(200).send(error.message);

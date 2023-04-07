@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  DeleteDateColumn,
+} from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { Operation } from '../operation/operation.entity';
 import { User } from '../user/user.entity';
@@ -34,4 +42,7 @@ export class Record {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  public deletedAt: Date;
 }

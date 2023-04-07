@@ -12,7 +12,6 @@ export default class AddCommand implements ICommand {
   }
 
   validate(): void {
-
     if (this.operation.type !== OperationsEnum.ADD) {
       throw new Error('Wrong operation type');
     }
