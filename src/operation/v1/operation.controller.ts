@@ -11,11 +11,6 @@ import authMiddleware from '../../util/middleware/auth.middleware';
 export default class OperationController {
   constructor(private readonly operationService: OperationService) {}
 
-  @Get('/list')
-  async list(req: AuthRequest, res: Response) {
-    return res.send('Hello response!');
-  }
-
   @Post('/calculate-cost-arithmetic')
   @authMiddleware()
   async calculateOperationCost(req: AuthRequest, res: Response) {
